@@ -1,6 +1,4 @@
-import { AbstractSerializable } from "./serializable.abstract";
-
-export class Escola extends AbstractSerializable {
+export class Escola {
 
   id: string;
   nome: string;
@@ -13,10 +11,17 @@ export class Escola extends AbstractSerializable {
   complemento: string
   fone: string;
   email: string;
-  ativa: boolean;
 
   constructor(data?: any | Escola) {
-    super(data);
+    this.deserialize(data);
+  }
+
+  serialize() {
+    return JSON.parse(JSON.stringify(this));
+  }
+
+  deserialize(data?: any | Escola): any {
+    Object.assign(this, data);
   }
 
   get endereco(): string {
@@ -46,6 +51,5 @@ export class Escola extends AbstractSerializable {
     if (this.email) contato.push(this.email);
     return contato.join(', ');
   }
-
 
 }
