@@ -36,11 +36,9 @@ export class EscolaPage {
       let { escola, turmas } = await this.escolasProvider.buscaEscola(this.escolaId);
       this.escola = escola;
       this.turmas = turmas;
-      console.log(escola)
-      console.log(turmas)
       this.error = '';
     } catch (error) {
-      this.error = 'Falha ao buscar escolas.';
+      this.error = 'Falha ao buscar escola.';
     }
     this.loading = false;
   }

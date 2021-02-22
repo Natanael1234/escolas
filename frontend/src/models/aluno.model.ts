@@ -3,6 +3,7 @@ import { AbstractSerializable } from "./serializable.abstract";
 export class Aluno extends AbstractSerializable {
 
   id: string;
+  matricula: string;
   nome: string;
   cpf: string;
   logradouro: string;

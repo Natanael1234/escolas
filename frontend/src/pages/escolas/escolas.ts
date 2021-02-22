@@ -3,7 +3,6 @@ import { IonicPage } from 'ionic-angular';
 import { Escola } from '../../models/escola.model';
 import { EscolasProvider } from '../../providers/escolas/escolas.provider';
 import FuzzySearch from 'fuzzy-search';
-import { stringify } from '@angular/core/src/util';
 
 @IonicPage()
 @Component({

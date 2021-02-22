@@ -40,7 +40,9 @@ export class EscolasProvider {
         this.turmas.push(turma);
         for (let alunoIdx = 1; alunoIdx < 20; alunoIdx++, this.lastAlunoId++) {
           let aluno = new Aluno();
+          aluno.id = this.lastAlunoId + '';
           aluno.nome = 'Aluno #' + this.lastAlunoId;
+          aluno.matricula = Math.floor(Math.random() * 1000000000) + '';
           aluno.cpf = '184.118.870-06';
           aluno.logradouro = 'Rua X';
           aluno.numero = 32;
@@ -160,9 +162,12 @@ export class EscolasProvider {
    * @param turmaId
    */
   async buscaTurma(turmaId: string): Promise<{ escola: Escola, turma: Turma, alunos: Aluno[] }> {
+    if (!turmaId) throw new Error('Turma inválida');
     let turma = this.turmas.find(turma => turma.id == turmaId);
-    if (turma) throw new Error('Turma não encontrada');
-    let alunos = this.alunos.filter(aluno => turma.id == aluno.turmaId);
+    if (!turma) throw new Error('Turma não encontrada');
+    let alunos = this.alunos.filter(aluno => {
+      return turma.id == aluno.turmaId;
+    });
     let escola = this.escolas.find(escola => turma.escolaId == escola.id);
     return { escola, turma, alunos };
   }
