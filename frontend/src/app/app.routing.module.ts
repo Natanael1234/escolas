@@ -21,11 +21,6 @@ export const routes: Routes = [
     path: 'turma/:turmaId',
     loadChildren: () => import('../pages/turma/turma.module')
       .then((m) => m.TurmaPageModule),
-  },
-  {
-    path: 'aluno/:alunoId',
-    loadChildren: () => import('../pages/aluno/aluno.module')
-      .then((m) => m.AlunoPageModule),
   }
 ];
 

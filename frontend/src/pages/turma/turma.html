@@ -36,7 +36,7 @@
       <ion-item
         *ngFor="let aluno of alunosFiltrados"
         [ngClass]="['hoverable', 'pointable']"
-        [routerLink]="['/aluno', aluno.id]"
+        (click)="abrirModalAluno(aluno)"
       >
         <!-- conteúdo do item escola -->
         <div class="turma conteudo-item">

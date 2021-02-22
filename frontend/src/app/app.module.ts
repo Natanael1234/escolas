@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { EscolasProvider } from '../providers/escolas/escolas.provider';
+import { AlunoModalPageModule } from '../pages/aluno-modal/aluno-modal.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { EscolasProvider } from '../providers/escolas/escolas.provider';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AlunoModalPageModule,
     IonicModule.forRoot(MyApp, {
       // locationStrategy: 'path'
     })
@@ -25,8 +27,8 @@ import { EscolasProvider } from '../providers/escolas/escolas.provider';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     EscolasProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }

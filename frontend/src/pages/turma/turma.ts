@@ -6,6 +6,9 @@ import { Escola } from '../../models/escola.model';
 import { Turma } from '../../models/turma.model';
 import { EscolasProvider } from '../../providers/escolas/escolas.provider';
 import FuzzySearch from 'fuzzy-search';
+import { AlunoModalPage } from '../aluno-modal/aluno-modal';
+import { ModalController } from 'ionic-angular';
+
 
 @IonicPage()
 @Component({
@@ -26,7 +29,8 @@ export class TurmaPage {
   constructor(
     public router: Router,
     public activatedRoute: ActivatedRoute,
-    public escolasProvider: EscolasProvider
+    public escolasProvider: EscolasProvider,
+    public modalController: ModalController
   ) {
     this.activatedRoute.params.subscribe(parameter => {
       this.turmaId = parameter.turmaId;
@@ -58,6 +62,16 @@ export class TurmaPage {
       this.alunosFiltrados = searcher.search(this.textoBusca);
     } else {
       this.alunosFiltrados = this.alunos;
+    }
+  }
+
+  async abrirModalAluno(aluno: Aluno) {
+    if (aluno) {
+      const modal = await this.modalController.create(AlunoModalPage, { aluno }, { enableBackdropDismiss: false });
+      modal.onDidDismiss(ret => {
+        if (ret.salvo) this.carregaEscola();
+      });
+      return await modal.present();
     }
   }
 
