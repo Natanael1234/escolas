@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
+import { BrMaskerModule } from 'br-mask';
 import { IonicPageModule } from 'ionic-angular';
 import { EscolasPage } from './escolas';
 import { EscolasRoutingModule } from './escolas-routing.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -9,7 +11,9 @@ import { EscolasRoutingModule } from './escolas-routing.module';
   ],
   imports: [
     IonicPageModule.forChild(EscolasPage),
-    EscolasRoutingModule
+    BrMaskerModule,
+    EscolasRoutingModule,
+    FormsModule
   ],
   exports: [
     EscolasPage

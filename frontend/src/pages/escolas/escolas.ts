@@ -4,6 +4,8 @@ import { Escola } from '../../models/escola.model';
 import { EscolasProvider } from '../../providers/escolas/escolas.provider';
 import FuzzySearch from 'fuzzy-search';
 
+
+
 @IonicPage()
 @Component({
   selector: 'page-escolas',
@@ -11,11 +13,15 @@ import FuzzySearch from 'fuzzy-search';
 })
 export class EscolasPage {
 
+
+
   loading: boolean = false;
   error: string;
   escolas: Escola[];
   escolasFiltradas: Escola[];
   textoBusca = '';
+
+
 
   constructor(public escolasProvider: EscolasProvider) {
     this.carregaEscolas();
