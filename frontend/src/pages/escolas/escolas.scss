@@ -1,7 +1,6 @@
-@import "../../theme/responsividade.scss";
-@import "../../theme/events.scss";
-
 page-escolas {
+  @import "../../theme/responsividade.scss";
+  @import "../../theme/events.scss";
   .conteudo-item {
     width: 100%;
     display: grid;

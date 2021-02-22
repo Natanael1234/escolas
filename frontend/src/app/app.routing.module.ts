@@ -11,12 +11,17 @@ export const routes: Routes = [
     path: 'escolas',
     // component: EscolasPage
     loadChildren: () => import('../pages/escolas/escolas.module')
-                    .then((m) => m.EscolasPageModule),
+      .then((m) => m.EscolasPageModule),
   },
   {
     path: 'escola/:escolaId',
     loadChildren: () => import('../pages/escola/escola.module')
-                    .then((m) => m.EscolaPageModule),
+      .then((m) => m.EscolaPageModule),
+  },
+  {
+    path: 'turma/:turmaId',
+    loadChildren: () => import('../pages/turma/turma.module')
+      .then((m) => m.TurmaPageModule),
   }
 ];
 

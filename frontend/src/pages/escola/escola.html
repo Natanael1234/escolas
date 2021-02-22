@@ -1,7 +1,94 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Escola {{ escola?.nome || 'Indefinida' }}</ion-title>
+    <ion-title>Escola</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding> </ion-content>
+<ion-content padding>
+  <div class="colunas">
+    <div class="coluna-central">
+
+
+
+    <h1>Dados da Escola</h1>
+
+    <div class="dados-escola">
+      <div class="item-dados-escola"></div>
+    </div>
+    <div class="dados-escola">
+      <div class="nome chave">Nome:</div>
+      <div class="nome valor">{{ escola.nome }}</div>
+
+      <div class="logradouro chave">Logradouro:</div>
+      <div class="logradouro valor">{{ escola.logradouro }}</div>
+
+      <div class="numero chave">Numero:</div>
+      <div class="numero valor">{{ escola.numero }}</div>
+
+      <div class="bairro chave">Bairro:</div>
+      <div class="bairro valor">{{ escola.bairro }}</div>
+
+      <div class="cidade chave">Cidade:</div>
+      <div class="cidade valor">{{ escola.cidade }}</div>
+
+      <div class="estado chave">Estado:</div>
+      <div class="estado valor">{{ escola.estado }}</div>
+
+      <div class="cep chave">Cep:</div>
+      <div class="cep valor">{{ escola.cep }}</div>
+
+      <div class="complemento chave">Complemento:</div>
+      <div class="complemento valor">{{ escola.complemento }}</div>
+
+      <div class="fone chave link">Fone:</div>
+      <div class="fone valor">
+        <a [href]="'tel:' + escola.fone"
+          >{{escola.fone}}
+          <ion-icon name="open-outline" target="_blank"></ion-icon
+        ></a>
+      </div>
+
+      <div class="email chave link">Email:</div>
+      <div class="email valor">
+        <a [href]="'mailto:' + escola.email"
+          >{{ escola.email }}
+          <ion-icon name="open-outline" target="_blank"></ion-icon>
+        </a>
+      </div>
+    </div>
+
+    <h1>Turmas</h1>
+
+    <!-- lista de escolas -->
+    <ion-list *ngIf="turmas">
+      <!-- item turma -->
+      <ion-item
+        *ngFor="let turma of turmas"
+        [ngClass]="['hoverable', 'pointable']"
+        [routerLink]="['/turma', turma.id]"
+      >
+        <!-- conteúdo do item turma -->
+        <div class="conteudo-item">
+          <!-- número -->
+          <div class="numero coluna">
+            <h1 class="condeúdo">Turma {{ turma.numero }}</h1>
+          </div>
+
+          <!-- série -->
+          <div class="serie coluna">
+            <div class="condeúdo">{{ turma.serie }}ª série</div>
+          </div>
+
+          <!-- ativa -->
+          <div class="ativa coluna">
+            <ion-icon title="Ativa" name="checkmark-sharp"></ion-icon>
+          </div>
+        </div>
+      </ion-item>
+      <!-- fim do item turma -->
+    </ion-list>
+    <!-- fim da lista de turmas -->
+  </div>
+</div>
+
+</ion-content>

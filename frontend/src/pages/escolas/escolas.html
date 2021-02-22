@@ -22,8 +22,10 @@
       *ngFor="let escola of escolasFiltradas"
       [ngClass]="['hoverable', 'pointable']"
       [routerLink]="['/escola', escola.id]">
+
       <!-- conteúdo do item escola -->
-      <div class="conteudo-item">
+      <div class="turma conteudo-item">
+
         <!-- nome -->
         <div class="nome">
           <div class="texto">
@@ -48,7 +50,11 @@
           <ion-icon name="mail-sharp"></ion-icon>
           <div class="texto">{{ escola.email }}</div>
         </div>
+
       </div>
+
     </ion-item>
+
   </ion-list>
+
 </ion-content>

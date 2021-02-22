@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { Escola } from '../../models/escola.model';
-import { EscolasProvider } from '../../providers/escolas/escolas';
+import { EscolasProvider } from '../../providers/escolas/escolas.provider';
 import FuzzySearch from 'fuzzy-search';
 import { stringify } from '@angular/core/src/util';
 
@@ -26,8 +26,7 @@ export class EscolasPage {
     this.loading = true;
     this.error = null;
     try {
-      this.escolas = await this.escolasProvider.carregaEscolas();
-      console.log(this.textoBusca);
+      this.escolas = await this.escolasProvider.listaEscolas();
       this.filtraEscolas();
     } catch (error) {
       this.error = 'Falha ao buscar escolas.';
