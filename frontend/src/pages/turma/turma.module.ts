@@ -11,5 +11,6 @@ import { TurmaRoutingModule } from './turma-routing.module';
     IonicPageModule.forChild(TurmaPage),
     TurmaRoutingModule
   ],
+  exports: [TurmaPage]
 })
-export class TurmaPageModule {}
+export class TurmaPageModule { }
