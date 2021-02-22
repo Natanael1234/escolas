@@ -1,0 +1,45 @@
+page-escolas {
+  @import "../../theme/responsividade.scss";
+  @import "../../theme/events.scss";
+  .conteudo-item {
+    width: 100%;
+    display: grid;
+
+    .busca,
+    .nome,
+    .endereco,
+    .fone,
+    .email {
+      padding: 8px;
+      grid-template-columns: 27px auto;
+      display: grid;
+      ion-icon {
+        margin-right: 8px;
+      }
+      .texto {
+      }
+    }
+
+    @include xs() {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+    }
+
+    @include xl() {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-rows: auto;
+      .nome {
+        grid-column: 1 / 2;
+      }
+      .endereco {
+        grid-column: 2 / 3;
+      }
+      .fone {
+        grid-column: 3 / 4;
+      }
+      .email {
+        grid-column: 4 / 5;
+      }
+    }
+  }
+}

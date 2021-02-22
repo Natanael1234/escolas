@@ -1,0 +1,123 @@
+page-escola {
+  @import "../../theme/responsividade.scss";
+  @import "../../theme/events.scss";
+
+  .colunas {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    @include xs() {
+      .coluna-central {
+        width: 100%;
+      }
+    }
+    @include md() {
+      .coluna-central {
+        width: 85%;
+      }
+    }
+    @include lg() {
+      .coluna-central {
+        width: 75%;
+      }
+    }
+    @include xl() {
+      .coluna-central {
+        width: 55%;
+      }
+    }
+  }
+
+  .dados-escola {
+    display: grid;
+    grid-template-columns: auto auto;
+    .chave {
+      font-weight: bold;
+    }
+    .valor {
+      a {
+        color: initial;
+        text-decoration: none; /* no underline */
+      }
+    }
+
+    .chave,
+    .valor {
+      padding: 4px;
+      display: grid;
+      align-items: center;
+      a {
+      }
+    }
+
+    @include xs() {
+      grid-template-columns: 1fr 3fr;
+      .chave {
+        text-align: end;
+        grid-column: 1 / 2;
+      }
+      .valor {
+        grid-column: 2 / 3;
+      }
+    }
+  }
+
+  .conteudo-item {
+    width: 100%;
+    display: grid;
+
+    .numero,
+    .serie,
+    .ativa {
+      // padding: 8px;
+      grid-template-columns: 27px auto;
+      display: grid;
+    }
+
+    .numero {
+      grid-column: 1 / 2;
+    }
+    .serie {
+      grid-column: 2 / 3;
+    }
+    .ativa {
+      grid-column: 3 / 4;
+    }
+
+    @include xs() {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+      .numero {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+      }
+      .serie {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+      }
+      .ativa {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+      }
+    }
+
+    @include sm() {
+      grid-template-columns: auto 27px;
+      grid-template-rows: auto auto;
+      .numero {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+      }
+      .serie {
+        grid-column: 1 / 2;
+        grid-row: 2 / 2;
+      }
+      .ativa {
+        grid-column: 2 / 3;
+        grid-row: 1 / 3;
+      }
+    }
+
+
+  }
+}
