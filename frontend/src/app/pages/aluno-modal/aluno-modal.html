@@ -1,0 +1,131 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Aluno</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  class="ion-padding">
+  <form *ngIf="form" [formGroup]="form">
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Nome</ion-label>
+      <ion-input type="text" formControlName="nome" [disabled]="!editMode"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input type="email" formControlName="email" [disabled]="!editMode"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Fone</ion-label>
+      <ion-input type="tel" formControlName="fone" [disabled]="!editMode" ></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">CPF</ion-label>
+      <ion-input type="text" formControlName="cpf"  [disabled]="!editMode"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Turma</ion-label>
+      <ion-input type="text" formControlName="turmaId" [disabled]="!editMode"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Escola</ion-label>
+      <ion-input type="text" formControlName="escolaId" [disabled]="!editMode"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">CEP</ion-label>
+      <ion-input type="text" formControlName="cep" [disabled]="!editMode"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Logradouro</ion-label>
+      <ion-input type="text" formControlName="logradouro" [disabled]="!editMode"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Número</ion-label>
+      <ion-input type="text" formControlName="numero" [disabled]="!editMode"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Complemento</ion-label>
+      <ion-input type="text" formControlName="complemento" [disabled]="!editMode"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Bairro</ion-label>
+      <ion-input type="text" formControlName="bairro" [disabled]="!editMode"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Cidade</ion-label>
+      <ion-input type="text" formControlName="cidade" [disabled]="!editMode"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="stacked">Estado</ion-label>
+      <ion-input type="text" formControlName="estado" [disabled]="!editMode"></ion-input>
+    </ion-item>
+  </form>
+
+  <div class="error" *ngIf="!aluno">Falha ao exibir aluno.</div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+
+    <!-- Sair -->
+    <ion-button
+      *ngIf="!editMode"
+      ion-button
+      slot="end"
+      shape="round"
+      fill="clear"
+      type="button"
+      color="dark"
+      class="ion-margin"
+      (click)="closeModal()">Sair</ion-button>
+
+    <!-- Sair da edição -->
+    <ion-button
+      *ngIf="editMode"
+      ion-button
+      slot="end"
+      shape="round"
+      fill="clear"
+      color="dark"
+      class="ion-margin"
+      [disabled]="disableClose"
+      (click)="setEditMode(false)">Cancelar</ion-button>
+
+    <!-- Editar -->
+    <ion-button
+      *ngIf="!editMode"
+      ion-button
+      slot="end"
+      shape="round"
+      fill="clear"
+      color="primary"
+      class="ion-margin"
+      (click)="setEditMode(true)">Editar</ion-button>
+
+    <!-- Salvar -->
+    <ion-button
+      *ngIf="editMode"
+      ion-button
+      slot="end"
+      shape="round"
+      fill="clear"
+      type="button"
+      color="primary"
+      class="ion-margin"
+      [disabled]="disableClose"
+      (click)="salvar()">Salvar</ion-button>
+
+  </ion-toolbar>
+</ion-footer>

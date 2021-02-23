@@ -1,0 +1,56 @@
+@import "../../../theme/responsividade.scss";
+@import "../../../theme/events.scss";
+.conteudo-item {
+  width: 100%;
+  display: grid;
+
+  .busca,
+  .nome,
+  .endereco,
+  .fone,
+  .email,
+  .ativa {
+    padding: 8px;
+    display: grid;
+    align-items: center;
+  }
+  .nome {
+    font-size: larger;
+    font-weight: 600;
+  }
+
+  grid-template-columns: 1fr 27px;
+  grid-template-rows: auto auto;
+
+  .nome,
+  .endereco ,
+  .fone,
+  .email {
+    grid-column: 1 / 2;
+  }
+  .ativa {
+    grid-column: 2 / 3;
+    grid-row: 1 / 5 ;
+  }
+
+  @include xl() {
+    grid-template-columns: 1fr 1fr 1fr 1fr 27px;
+    grid-template-rows: auto;
+    .nome {
+      grid-column: 1 / 2;
+    }
+    .endereco {
+      grid-column: 2 / 3;
+    }
+    .fone {
+      grid-column: 3 / 4;
+    }
+    .email {
+      grid-column: 4 / 5;
+    }
+    .ativa {
+      grid-column: 5 / 6;
+      grid-row: 1 / 2 ;
+    }
+  }
+}

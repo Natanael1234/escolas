@@ -1,0 +1,77 @@
+@import "../../../theme/responsividade.scss";
+@import "../../../theme/events.scss";
+
+.dados-turma {
+  display: grid;
+  grid-template-columns: auto auto;
+  .chave {
+    font-weight: bold;
+  }
+  .valor {
+    a {
+      color: initial;
+      text-decoration: none; /* no underline */
+    }
+  }
+
+  .chave,
+  .valor {
+    padding: 4px;
+    display: grid;
+    align-items: center;
+    a {
+    }
+  }
+
+  @include xs() {
+    grid-template-columns: 1fr 3fr;
+    .chave {
+      text-align: end;
+      grid-column: 1 / 2;
+    }
+    .valor {
+      grid-column: 2 / 3;
+    }
+  }
+}
+
+
+.conteudo-item {
+  width: 100%;
+  display: grid;
+
+  .busca,
+  .nome,
+  .matricula,
+  .fone,
+  .email {
+    padding: 8px;
+    display: grid;
+  }
+  .nome {
+    font-size: larger;
+    font-weight: 600;
+  }
+
+  @include xs() {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  @include xl() {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    .nome {
+      grid-column: 1 / 2;
+    }
+    .matricula {
+      grid-column: 2 / 3;
+    }
+    .fone {
+      grid-column: 3 / 4;
+    }
+    .email {
+      grid-column: 4 / 5;
+    }
+  }
+}

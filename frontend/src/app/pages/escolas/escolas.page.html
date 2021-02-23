@@ -1,0 +1,65 @@
+<!-- Cabeçalho -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Escolas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Conteúdo -->
+<ion-content class="ion-padding">
+
+  <!-- <ion-item lines="full">
+    <ion-label>CEP</ion-label>
+    <ion-input type="text" ></ion-input>
+  </ion-item> -->
+
+  <!-- campo busca -->
+  <ion-searchbar
+    [(ngModel)]="textoBusca"
+    placeholder="Buscar Escolas"
+    (ionChange)="filtraEscolas()"></ion-searchbar>
+
+  <!-- lista de escolas -->
+  <ion-list *ngIf="escolas">
+
+    <!-- item escola -->
+    <ion-item
+      *ngFor="let escola of escolasFiltradas"
+
+      [routerLink]="['/escola', escola.id]">
+
+      <!-- conteúdo do item escola -->
+      <div class="turma conteudo-item">
+
+        <!-- nome -->
+        <div class="nome">
+          {{ escola.nome }}
+        </div>
+
+        <!-- endereco -->
+        <div class="endereco">
+          {{ escola.endereco }}
+        </div>
+
+        <!-- fone -->
+        <div class="fone">
+          {{ escola.fone}}
+        </div>
+
+        <!-- email -->
+        <div class="email">
+          {{ escola.email }}
+        </div>
+
+        <!-- ativa -->
+        <div class="ativa">
+          <ion-icon  *ngIf="escola.ativa"  name="checkmark-sharp"></ion-icon>
+        </div>
+
+      </div>
+
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

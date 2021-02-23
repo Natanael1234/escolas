@@ -1,0 +1,90 @@
+@import "../../../theme/responsividade.scss";
+@import "../../../theme/events.scss";
+
+.error {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-items: center;
+}
+
+.colunas {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  .dados-escola {
+    display: grid;
+    grid-template-columns: auto auto;
+    .chave {
+      font-weight: bold;
+    }
+    .valor {
+      a {
+        color: initial;
+        text-decoration: none; /* no underline */
+      }
+    }
+
+    .chave,
+    .valor {
+      padding: 4px;
+      display: grid;
+      align-items: center;
+      a {
+      }
+    }
+
+    @include xs() {
+      grid-template-columns: 1fr 3fr;
+      .chave {
+        text-align: end;
+        grid-column: 1 / 2;
+      }
+      .valor {
+        grid-column: 2 / 3;
+      }
+    }
+  }
+}
+
+.conteudo-item {
+  width: 100%;
+  display: grid;
+
+  // divide o conteúdo do item em três linhas
+  grid-template-columns: 1fr 27px;
+  grid-template-rows: auto auto auto;
+  align-items: center;
+  .numero {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    font-size: larger;
+    font-weight: 600;
+  }
+  .serie {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+  .ativa {
+    grid-column: 2 / 3;
+    grid-row: 1 / 4;
+  }
+
+  // divide o conteúdo do item em tabela
+  @include sm() {
+    grid-template-columns: auto auto 27px;
+    grid-template-rows: auto auto;
+    .numero {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
+    .serie {
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
+    }
+    .ativa {
+      grid-column: 3 / 4;
+      grid-row: 1 / 2;
+    }
+  }
+}
