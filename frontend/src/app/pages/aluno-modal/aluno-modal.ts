@@ -137,7 +137,6 @@ export class AlunoModalPage {
   }
 
   async buscarAlunoPorCPF() {
-    console.log('Buscando por cpe', this.form.controls.cpf.value);
     try {
       let aluno = await this.escolasProvider.buscaAlunoPorCPF(this.form.controls.cpf.value);
       this.aluno = aluno;
