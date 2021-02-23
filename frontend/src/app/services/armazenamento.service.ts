@@ -90,7 +90,7 @@ export class ArmazenamentoService {
         for (let alunoIdx = 1; alunoIdx < 20; alunoIdx++, alunoId++) {
           let aluno = new Aluno();
           aluno.id = alunoId + '';
-          aluno.nome = 'Aluno #' + turmaIdx;
+          aluno.nome = 'Aluno #' + alunoIdx + ' ' + ' da Turma #' + turmaIdx;
           aluno.matricula = Math.floor(Math.random() * 1000000000) + '';
           aluno.cpf = '184.118.870-06';
           aluno.logradouro = 'Rua X';

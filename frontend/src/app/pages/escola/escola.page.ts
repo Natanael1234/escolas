@@ -27,11 +27,9 @@ export class EscolaPage {
     public escolasProvider: EscolasService
   ) {
     this.escolaId = this.activatedRoute.snapshot.paramMap.get('escolaId');
-    console.log(this.escolaId)
   }
 
   ionViewDidEnter() {
-    console.log('Carregando escola');
     if (this.escolaId) {
       this.carregaEscola();
     } else {
@@ -81,7 +79,6 @@ export class EscolaPage {
   async salvarFormulario() {
     try {
       let escola = new Escola(this.form.getRawValue());
-      console.log('Salvando', escola)
       this.escolasProvider.salvaEscola(escola);
       this.escola = escola;
       if (!this.escolaId) {
