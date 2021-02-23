@@ -104,7 +104,7 @@
 
       </ion-toolbar>
 
-      <ion-toolbar *ngIf="escola">
+      <ion-toolbar *ngIf="escolaId && escola && turmas">
           <ion-title>Turmas</ion-title>
           <ion-button
             ion-button
@@ -122,7 +122,7 @@
 
 
       <!-- lista de turmas -->
-      <ion-list *ngIf="escola && turmas">
+      <ion-list *ngIf="escolaId && escola && turmas && turmas.length">
         <!-- item turma -->
         <ion-item
           *ngFor="let turma of turmas"

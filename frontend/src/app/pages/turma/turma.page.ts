@@ -43,14 +43,8 @@ export class TurmaPage {
   }
 
   async criaTurma () {
-    this.turma = new Turma();
-    this.form = new FormGroup({
-      id: new FormControl(null, { validators: [] }),
-      numero: new FormControl('', { validators: [] }),
-      serie: new FormControl(undefined, { validators: [] }),
-      ativa: new FormControl(false, { validators: [] }),
-      escolaId: new FormControl(this.escolaId, { validators: [] })
-    });
+    this.turma = new Turma({escolaId: this.escolaId});
+    this.loadForm();
   }
 
   async carregaTurma() {
@@ -60,13 +54,7 @@ export class TurmaPage {
       let { escola, turma, alunos } = await this.escolasProvider.buscaTurma(this.turmaId);
       this.escola = escola;
       this.turma = turma;
-      this.form = new FormGroup({
-        id: new FormControl(turma.id, { validators: [] }),
-        numero: new FormControl(turma.numero, { validators: [] }),
-        serie: new FormControl(turma.serie, { validators: [] }),
-        ativa: new FormControl(turma.ativa, { validators: [] }),
-        escolaId: new FormControl(turma.escolaId, { validators: [] })
-      });
+      this.loadForm();
       this.alunos = alunos;
       this.filtraAlunos();
       this.error = '';
@@ -74,6 +62,18 @@ export class TurmaPage {
       this.error = error.message || 'Falha ao buscar aluno.';
     }
     this.loading = false;
+  }
+
+  loadForm () {
+    if (this.turma) {
+      this.form = new FormGroup({
+        id: new FormControl(this.turma.id, { validators: [] }),
+        numero: new FormControl(this.turma.numero, { validators: [] }),
+        serie: new FormControl(this.turma.serie, { validators: [] }),
+        ativa: new FormControl(this.turma.ativa, { validators: [] }),
+        escolaId: new FormControl(this.turma.escolaId, { validators: [] })
+      });
+    }
   }
 
   filtraAlunos() {
@@ -119,7 +119,6 @@ export class TurmaPage {
       let turma = new Turma(this.form.getRawValue());
       turma = await this.escolasProvider.salvaTurma(turma);
       this.turma = turma;
-      console.log('this.turmaId: ', this.turmaId, ', this.alunos: ', this.alunos, ', this.turma:', this.turma,  ', this.turma.id:', this.turma?.id)
       // se criando turma
       if (!this.turmaId) {
         this.turmaId = turma.id;

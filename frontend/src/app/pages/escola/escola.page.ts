@@ -27,33 +27,25 @@ export class EscolaPage {
     public escolasProvider: EscolasService
   ) {
     this.escolaId = this.activatedRoute.snapshot.paramMap.get('escolaId');
+    console.log(this.escolaId)
   }
 
-  ionViewDidEnter () {
-    this.carregaEscola();
+  ionViewDidEnter() {
+    console.log('Carregando escola');
+    if (this.escolaId) {
+      this.carregaEscola();
+    } else {
+      this.criaEscola();
+    }
   }
 
   async carregaEscola() {
     this.loading = true;
     this.error = null;
     try {
-      console.log('escolaId', this.escolaId);
       let { escola, turmas } = await this.escolasProvider.buscaEscola(this.escolaId);
       this.escola = escola;
-      this.form = new FormGroup({
-        id: new FormControl(escola.id, { validators: [] }),
-        nome: new FormControl(escola.nome, { validators: [Validators.required] }),
-        logradouro: new FormControl(escola.logradouro, { validators: [Validators.required] }),
-        numero: new FormControl(escola.numero, { validators: [Validators.required] }),
-        bairro: new FormControl(escola.bairro, { validators: [Validators.required] }),
-        cidade: new FormControl(escola.cidade, { validators: [Validators.required] }),
-        estado: new FormControl(escola.estado, { validators: [Validators.required] }),
-        cep: new FormControl(escola.cep, { validators: [Validators.required] }),
-        complemento: new FormControl(escola.complemento, { validators: [] }),
-        fone: new FormControl(escola.fone, { validators: [Validators.required] }),
-        email: new FormControl(escola.email, { validators: [Validators.required] }),
-        ativa: new FormControl(escola.ativa, { validators: [Validators.required] })
-      });
+      this.loadForm();
       this.turmas = turmas;
       this.error = '';
     } catch (error) {
@@ -62,11 +54,42 @@ export class EscolaPage {
     this.loading = false;
   }
 
-  salvarFormulario() {
+  async criaEscola() {
+    let escola = new Escola();
+    this.escola = escola;
+    this.loadForm();
+  }
+
+  loadForm() {
+    if (this.escola)
+      this.form = new FormGroup({
+        id: new FormControl(this.escola.id, { validators: [] }),
+        nome: new FormControl(this.escola.nome, { validators: [Validators.required] }),
+        logradouro: new FormControl(this.escola.logradouro, { validators: [Validators.required] }),
+        numero: new FormControl(this.escola.numero, { validators: [Validators.required] }),
+        bairro: new FormControl(this.escola.bairro, { validators: [Validators.required] }),
+        cidade: new FormControl(this.escola.cidade, { validators: [Validators.required] }),
+        estado: new FormControl(this.escola.estado, { validators: [Validators.required] }),
+        cep: new FormControl(this.escola.cep, { validators: [Validators.required] }),
+        complemento: new FormControl(this.escola.complemento, { validators: [] }),
+        fone: new FormControl(this.escola.fone, { validators: [Validators.required] }),
+        email: new FormControl(this.escola.email, { validators: [Validators.required] }),
+        ativa: new FormControl(this.escola.ativa, { validators: [Validators.required] })
+      });
+  }
+
+  async salvarFormulario() {
     try {
       let escola = new Escola(this.form.getRawValue());
-      this.escolasProvider.salvaEscola(escola);
+      console.log('Salvando', escola)
+      escola = await this.escolasProvider.salvaEscola(escola);
       this.escola = escola;
+      if (!this.escolaId) {
+        this.escolaId = this.escola.id;
+        // sai da página de criação e vai para o formulário normal.
+        this.router.navigate(['/escola', escola.id], { replaceUrl: true });
+        this.turmas = [];
+      }
     } catch (error) {
       alert(error.message || 'Falha ao salvar escola.');
     }

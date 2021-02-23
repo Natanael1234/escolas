@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/escolas/escolas.module').then(m => m.EscolasPageModule)
   },
   {
+    path: 'escola/new',
+    loadChildren: () => import('./pages/escola/escola.module').then(m => m.EscolaPageModule)
+  },
+  {
     path: 'escola/:escolaId',
     loadChildren: () => import('./pages/escola/escola.module').then(m => m.EscolaPageModule)
   },
