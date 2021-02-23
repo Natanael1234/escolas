@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Aluno</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  class="ion-padding">
+  <form *ngIf="form" [formGroup]="form">
+    <mat-form-field class="campo">
+      <mat-label>CPF</mat-label>
+      <input matInput type="text" formControlName="cpf"   [imask]="{mask: '000.000.000-00'}">
+      <mat-icon (click)="buscarAlunoPorCPF()" matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Nome</mat-label>
+      <input matInput type="text" formControlName="nome" >
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" >
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Fone</mat-label>
+      <input matInput type="tel" formControlName="fone"   [imask]="{mask: '(00) 0000-00000'}" >
+    </mat-form-field>
+
+
+    <mat-form-field class="campo">
+      <mat-label>Escola</mat-label>
+      <mat-select (selectionChange)="listaTurmas(this.form.controls.escolaId.value)"formControlName="escolaId"  [compareWith]="compareFn" >
+        <mat-option *ngFor="let escola of escolas" [value]="escola.id">
+          {{escola.nome}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Turma</mat-label>
+      <mat-select formControlName="turmaId" [compareWith]="compareFn">
+        <mat-option *ngFor="let turma of turmas" [value]="turma.id" >
+          {{ turma.id }} - Turma {{turma.numero}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>CEP</mat-label>
+      <input matInput type="text" formControlName="cep"  [imask]="{mask: '00000-000'}">
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Logradouro</mat-label>
+      <input matInput type="text" formControlName="logradouro" >
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Número</mat-label>
+      <input matInput type="number" formControlName="numero" >
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Complemento</mat-label>
+      <input matInput type="text" formControlName="complemento" >
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Bairro</mat-label>
+      <input matInput type="text" formControlName="bairro" >
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Cidade</mat-label>
+      <input matInput type="text" formControlName="cidade" >
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado" [compareWith]="compareFn">
+        <mat-option *ngFor="let estado of estados" [value]="estado.sigla" >
+          {{estado.nome}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+
+  <div class="error" *ngIf="!aluno">Falha ao exibir aluno.</div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+
+    <!-- Sair -->
+    <ion-button
+      ion-button
+      slot="end"
+      shape="round"
+      fill="clear"
+      type="button"
+      color="dark"
+      class="ion-margin"
+      (click)="closeModal()">Sair</ion-button>
+
+    <!-- Salvar -->
+    <ion-button
+      ion-button
+      slot="end"
+      shape="round"
+      fill="clear"
+      type="button"
+      color="primary"
+      class="ion-margin"
+      [disabled]="disableClose"
+      (click)="salvar()">Salvar</ion-button>
+
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,153 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Escola</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="colunas error" *ngIf="error && !loading">
+    {{ error }}
+  </div>
+
+  <div class="colunas"  *ngIf="!error && !loading">
+
+
+    <div class="coluna-central">
+      <h1  *ngIf="escola">Dados da Escola</h1>
+
+      <form *ngIf="form" [formGroup]="form" class="form-escola">
+
+        <mat-form-field class="campo">
+          <mat-label>Nome</mat-label>
+          <input matInput type="text" formControlName="nome" >
+        </mat-form-field>
+
+        <mat-form-field class="campo">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" >
+        </mat-form-field>
+
+        <mat-form-field class="campo">
+          <mat-label>Fone</mat-label>
+          <input matInput type="tel" formControlName="fone"   [imask]="{mask: '(00) 0000-00000'}" >
+        </mat-form-field>
+
+        <mat-form-field class="campo">
+          <mat-label>CEP</mat-label>
+          <input matInput type="text" formControlName="cep"  [imask]="{mask: '00000-000'}">
+        </mat-form-field>
+
+        <mat-form-field class="campo">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="estado" [compareWith]="compareFn">
+            <mat-option *ngFor="let estado of estados" [value]="estado.sigla" >
+              {{estado.nome}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="campo">
+          <mat-label>Cidade</mat-label>
+          <input matInput type="text" formControlName="cidade" >
+        </mat-form-field>
+
+        <mat-form-field class="campo">
+          <mat-label>Bairro</mat-label>
+          <input matInput type="text" formControlName="bairro" >
+        </mat-form-field>
+
+        <mat-form-field class="campo">
+          <mat-label>Logradouro</mat-label>
+          <input matInput type="text" formControlName="logradouro" >
+        </mat-form-field>
+
+        <mat-form-field class="campo">
+          <mat-label>Número</mat-label>
+          <input matInput type="number" formControlName="numero" >
+        </mat-form-field>
+
+        <mat-form-field class="campo">
+          <mat-label>Complemento</mat-label>
+          <input matInput type="text" formControlName="complemento" >
+        </mat-form-field>
+
+
+
+      </form>
+
+      <ion-toolbar *ngIf="escola">
+        <ion-button
+          ion-button
+          shape="round"
+          fill="clear"
+          type="button"
+          color="dark"
+          class="ion-margin"
+          (click)="resetarFormulario()">
+          Desfazer
+        </ion-button>
+
+        <ion-button
+          ion-button
+          shape="round"
+          fill="clear"
+          type="button"
+          color="primary"
+          class="ion-margin"
+          (click)="salvarFormulario()">
+          Salvar
+        </ion-button>
+
+      </ion-toolbar>
+
+      <ion-toolbar *ngIf="escola">
+          <ion-title>Turmas</ion-title>
+          <ion-button
+            ion-button
+            slot="end"
+            shape="round"
+            fill="clear"
+            type="button"
+            color="dark"
+            class="ion-margin"
+            [routerLink]="['/turma/new', escola.id]">
+            <ion-icon name="add-sharp"></ion-icon>
+        </ion-button>
+
+      </ion-toolbar>
+
+
+      <!-- lista de turmas -->
+      <ion-list *ngIf="escola && turmas">
+        <!-- item turma -->
+        <ion-item
+          *ngFor="let turma of turmas"
+          [ngClass]="['hoverable', 'pointable']"
+          [routerLink]="['/turma', turma.id]"
+        >
+          <!-- conteúdo do item turma -->
+          <div class="conteudo-item">
+
+            <!-- número -->
+            <div class="numero">Turma #{{ turma.numero }}</div>
+
+            <!-- série -->
+            <div class="serie">{{ turma.serie }}ª série </div>
+
+            <!-- ativa -->
+            <div class="ativa">
+              <ion-icon  *ngIf="turma.ativa"  name="checkmark-sharp"></ion-icon>
+            </div>
+
+          </div>
+        </ion-item>
+        <!-- fim do item turma -->
+      </ion-list>
+      <!-- fim da lista de turmas -->
+    </div>
+  </div>
+</ion-content>
