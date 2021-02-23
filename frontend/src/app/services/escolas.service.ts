@@ -109,13 +109,16 @@ export class EscolasService {
    * @param escola dados da escola.
    */
   async salvaEscola(escola: Escola) {
+    console.log('Salvando escola')
     let _escola = escola.id ? this.escolas.find(_escola => _escola.id == escola.id) : null;
     if (!_escola) {
       _escola = new Escola(escola);
       _escola.id = `${this.lastEscolaId++}`;
       this.escolas.push(_escola);
+      return new Escola(_escola);
     } else {
       _escola.deserialize(escola);
+      return _escola;
     }
   }
 
@@ -129,8 +132,10 @@ export class EscolasService {
       _turma = new Turma(turma);
       _turma.id = `${this.lastTurmaId++}`;
       this.turmas.push(_turma);
+      return new Turma(_turma);
     } else {
       _turma.deserialize(turma);
+      return _turma;
     }
   }
 
@@ -143,9 +148,12 @@ export class EscolasService {
     if (!_aluno) {
       _aluno = new Aluno(aluno);
       _aluno.id = `${this.lastAlunoId++}`;
+      _aluno.matricula = Math.floor(Math.random() * 1000000000) + '';
       this.alunos.push(_aluno);
+      return new Aluno(_aluno);
     } else {
       _aluno.deserialize(aluno);
+      return _aluno;
     }
   }
 
@@ -182,9 +190,27 @@ export class EscolasService {
   async buscaAluno(alunoId: string) {
     let aluno = this.alunos.find(aluno => aluno.id == alunoId);
     if (aluno) throw new Error('Aluno(a) não encontrado(a)');
+    aluno = new Aluno(aluno);
     let escola = this.escolas.find(escola => aluno.escolaId == escola.id);
+    if (escola) escola = new Escola(escola);
     let turma = this.turmas.find(turma => aluno.turmaId == turma.id);
+    if (turma) turma = new Turma(turma);
     return { escola, turma, aluno };
+  }
+
+  /**
+ * Busca um aluno por CPF.
+ * @param cpf
+ */
+  async buscaAlunoPorCPF(cpf: string) {
+    let aluno = this.alunos.find(aluno => {
+      let cpf1 = (aluno.cpf || '').replace(/\D/g, '');
+      let cpf2 = (cpf || '').replace(/\D/g, '');
+      // console.log(cpf1, cpf2);
+      return cpf1 == cpf2;
+    });
+    if (!aluno) throw new Error('Aluno(a) não encontrado(a)');
+    return new Aluno(aluno);
   }
 
 }

@@ -16,9 +16,9 @@ export class EscolasPage {
   escolasFiltradas: Escola[];
   textoBusca = '';
 
+  constructor(public escolasProvider: EscolasService) { }
 
-
-  constructor(public escolasProvider: EscolasService) {
+  ionViewDidEnter() {
     this.carregaEscolas();
   }
 

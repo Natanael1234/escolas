@@ -10,31 +10,78 @@
 <ion-content class="ion-padding">
   <div *ngIf="!loading && !error">
 
-    <h1>Dados da Turma</h1>
+    <h1  *ngIf="form">Dados da Turma</h1>
 
-    <div class="dados-turma">
-      <div class="item-dados-turma"></div>
-    </div>
-    <div class="dados-turma">
-      <div class="nome chave">Número:</div>
-      <div class="nome valor">{{ turma.numero }}</div>
+    <!-- formulário turma -->
+    <form *ngIf="form" [formGroup]="form" class="form-escola">
 
-      <div class="logradouro chave">Série:</div>
-      <div class="logradouro valor">{{ turma.serie }}ª</div>
+      <mat-form-field class="campo">
+        <mat-label>Numero</mat-label>
+        <input matInput type="text" formControlName="numero" >
+      </mat-form-field>
 
-    </div>
+      <mat-form-field class="campo">
+        <mat-label>Serie</mat-label>
+        <input matInput type="number" formControlName="serie" >
+      </mat-form-field>
 
-    <h1>Alunos</h1>
+      <mat-checkbox  class="campo" formControlName="ativa">Ativa</mat-checkbox>
 
-    <!-- campo busca -->
+    </form>
+
+    <!-- controles turma -->
+    <ion-toolbar>
+      <ion-button
+        ion-button
+        shape="round"
+        fill="clear"
+        type="button"
+        color="dark"
+        class="ion-margin"
+        (click)="resetarFormulario()">
+        Desfazer
+      </ion-button>
+
+      <ion-button
+        ion-button
+        shape="round"
+        fill="clear"
+        type="button"
+        color="primary"
+        class="ion-margin"
+        (click)="salvarFormulario()">
+        Salvar
+      </ion-button>
+
+    </ion-toolbar>
+
+    <!-- toolbar alunos -->
+    <ion-toolbar *ngIf="this.turmaId">
+      <ion-title>Alunos</ion-title>
+      <ion-button
+        ion-button
+        slot="end"
+        shape="round"
+        fill="clear"
+        type="button"
+        color="dark"
+        class="ion-margin"
+        (click)="criarAluno()">
+        <ion-icon name="add-sharp"></ion-icon>
+      </ion-button>
+
+    </ion-toolbar>
+
+    <!-- campo busca alunos -->
     <ion-searchbar
+      *ngIf="turmaId && alunos && alunos.length && turma && turma.id"
       [(ngModel)]="textoBusca"
       placeholder="Buscar Alunos"
       (ionChange)="filtraAlunos()"
     ></ion-searchbar>
 
     <!-- lista de alunos -->
-    <ion-list *ngIf="alunos">
+    <ion-list *ngIf="turmaId && alunos && alunos.length && turma && turma.id">
 
       <!-- item aluno -->
       <ion-item

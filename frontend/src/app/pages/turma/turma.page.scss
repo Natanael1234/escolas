@@ -1,39 +1,18 @@
 @import "../../../theme/responsividade.scss";
 @import "../../../theme/events.scss";
 
-.dados-turma {
+
+.form-escola {
+
   display: grid;
-  grid-template-columns: auto auto;
-  .chave {
-    font-weight: bold;
-  }
-  .valor {
-    a {
-      color: initial;
-      text-decoration: none; /* no underline */
-    }
-  }
+  grid-template-columns: auto;
+  grid-gap: 8px;
 
-  .chave,
-  .valor {
-    padding: 4px;
-    display: grid;
-    align-items: center;
-    a {
-    }
-  }
-
-  @include xs() {
-    grid-template-columns: 1fr 3fr;
-    .chave {
-      text-align: end;
-      grid-column: 1 / 2;
-    }
-    .valor {
-      grid-column: 2 / 3;
-    }
+  @include md() {
+    grid-template-columns: auto auto auto;
   }
 }
+
 
 
 .conteudo-item {

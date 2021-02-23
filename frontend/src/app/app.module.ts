@@ -8,21 +8,26 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AlunoModalPage } from './pages/aluno-modal/aluno-modal';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AlunoModalPageModule } from './pages/aluno-modal/aluno-modal.module';
 // import { AlunoModalPageModule } from './pages/aluno-modal/aluno-modal.module';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AlunoModalPage
+    AppComponent
+
   ],
   entryComponents: [
-    AlunoModalPage
+
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    AlunoModalPageModule
   ],
   providers: [{
     provide: RouteReuseStrategy,

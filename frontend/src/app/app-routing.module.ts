@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'turma/:turmaId',
     loadChildren: () => import('./pages/turma/turma.module').then(m => m.TurmaPageModule)
+  },
+  {
+    path: 'turma/new/:escolaId',
+    loadChildren: () => import('./pages/turma/turma.module').then(m => m.TurmaPageModule)
   }
 ];
 
