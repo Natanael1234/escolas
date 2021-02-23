@@ -27,8 +27,7 @@
       <input matInput type="tel" formControlName="fone"   [imask]="{mask: '(00) 0000-00000'}" >
     </mat-form-field>
 
-
-    <mat-form-field class="campo">
+    <!-- <mat-form-field class="campo">
       <mat-label>Escola</mat-label>
       <mat-select (selectionChange)="listaTurmas(this.form.controls.escolaId.value)"formControlName="escolaId"  [compareWith]="compareFn" >
         <mat-option *ngFor="let escola of escolas" [value]="escola.id">
@@ -44,11 +43,30 @@
           {{ turma.id }} - Turma {{turma.numero}}
         </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
 
     <mat-form-field class="campo">
       <mat-label>CEP</mat-label>
       <input matInput type="text" formControlName="cep"  [imask]="{mask: '00000-000'}">
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado" [compareWith]="compareFn">
+        <mat-option *ngFor="let estado of estados" [value]="estado.sigla" >
+          {{estado.nome}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Cidade</mat-label>
+      <input matInput type="text" formControlName="cidade" >
+    </mat-form-field>
+
+    <mat-form-field class="campo">
+      <mat-label>Bairro</mat-label>
+      <input matInput type="text" formControlName="bairro" >
     </mat-form-field>
 
     <mat-form-field class="campo">
@@ -64,25 +82,6 @@
     <mat-form-field class="campo">
       <mat-label>Complemento</mat-label>
       <input matInput type="text" formControlName="complemento" >
-    </mat-form-field>
-
-    <mat-form-field class="campo">
-      <mat-label>Bairro</mat-label>
-      <input matInput type="text" formControlName="bairro" >
-    </mat-form-field>
-
-    <mat-form-field class="campo">
-      <mat-label>Cidade</mat-label>
-      <input matInput type="text" formControlName="cidade" >
-    </mat-form-field>
-
-    <mat-form-field class="campo">
-      <mat-label>Estado</mat-label>
-      <mat-select formControlName="estado" [compareWith]="compareFn">
-        <mat-option *ngFor="let estado of estados" [value]="estado.sigla" >
-          {{estado.nome}}
-        </mat-option>
-      </mat-select>
     </mat-form-field>
 
   </form>
