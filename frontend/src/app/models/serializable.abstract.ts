@@ -1,5 +1,6 @@
 export class AbstractSerializable {
 
+  id: string;
 
   constructor(data?: any) {
     this.deserialize(data);

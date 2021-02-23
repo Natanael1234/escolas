@@ -2,7 +2,6 @@ import { AbstractSerializable } from "./serializable.abstract";
 
 export class Escola extends AbstractSerializable {
 
-  id: string;
   nome: string;
   logradouro: string;
   numero: number

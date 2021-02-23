@@ -82,7 +82,7 @@ export class EscolaPage {
     try {
       let escola = new Escola(this.form.getRawValue());
       console.log('Salvando', escola)
-      escola = await this.escolasProvider.salvaEscola(escola);
+      this.escolasProvider.salvaEscola(escola);
       this.escola = escola;
       if (!this.escolaId) {
         this.escolaId = this.escola.id;

@@ -2,68 +2,18 @@ import { Injectable } from '@angular/core';
 import { Aluno } from '../models/aluno.model';
 import { Escola } from '../models/escola.model';
 import { Turma } from '../models/turma.model';
+import { ArmazenamentoService } from './armazenamento.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EscolasService {
 
-
-  // Simula o banco de dados
-  private escolas: Escola[] = [];
-  private turmas: Turma[] = [];
-  private alunos: Aluno[] = [];
-  private lastEscolaId = 1;
-  private lastTurmaId = 1;
-  private lastAlunoId = 1;
-
-  constructor() {
-    for (let escolaIdx = 1; escolaIdx <= 10; escolaIdx++, this.lastEscolaId++) {
-      let escola = new Escola();
-      escola.id = this.lastEscolaId + '';
-      escola.nome = `Escola #${this.lastEscolaId}`;
-      escola.cep = '18278000';
-      escola.estado = 'SP';
-      escola.cidade = 'Tatuí';
-      escola.bairro = 'Vila Nova Esperança';
-      escola.logradouro = 'Rua Antônio Henrique da Silva ' + this.lastEscolaId;
-      escola.numero = 635;
-      escola.complemento = '';
-      escola.fone = '(15) 325' + this.lastEscolaId + '-3996';
-      escola.email = `escola_${this.lastEscolaId}@email.edu.br`;
-      escola.ativa = Math.random() < 0.5;
-      this.escolas.push(escola);
-      for (let turmaIdx = 1; turmaIdx < 8; turmaIdx++, this.lastTurmaId++) {
-        let turma = new Turma();
-        turma.id = this.lastTurmaId + '';
-        turma.ativa = Math.random() < 0.5;
-        turma.numero = turmaIdx + '';
-        turma.escolaId = escola.id;
-        turma.serie = turmaIdx + 1;
-        this.turmas.push(turma);
-        for (let alunoIdx = 1; alunoIdx < 20; alunoIdx++, this.lastAlunoId++) {
-          let aluno = new Aluno();
-          aluno.id = this.lastAlunoId + '';
-          aluno.nome = 'Aluno #' + this.lastAlunoId;
-          aluno.matricula = Math.floor(Math.random() * 1000000000) + '';
-          aluno.cpf = '184.118.870-06';
-          aluno.logradouro = 'Rua X';
-          aluno.numero = 32;
-          aluno.bairro = escola.bairro;
-          aluno.cidade = escola.cidade;
-          aluno.estado = escola.estado;
-          aluno.cep = escola.cep;
-          aluno.complemento = '';
-          aluno.fone = '(15) 325' + this.lastAlunoId + '-3996';
-          aluno.email = `aluno_${this.lastAlunoId}@email.edu.br`;
-          aluno.serie = turma.serie;
-          aluno.turmaId = turma.id;
-          aluno.escolaId = escola.id;
-          this.alunos.push(aluno);
-        }
-      }
+  constructor(public db: ArmazenamentoService) {
+    let escolas = this.db.getEscolas();
+    if (!escolas?.length) {
+      this.db.populate();
     }
-
   }
 
   /**
@@ -71,7 +21,7 @@ export class EscolasService {
    * @param filtros
    */
   async listaEscolas(): Promise<Escola[]> {
-    return this.escolas.map(escola => new Escola(escola));
+    return this.db.getEscolas().map(escola => new Escola(escola));
   }
 
   /**
@@ -80,9 +30,9 @@ export class EscolasService {
    */
   async listaTurmas(filtros: { escolaId: string }): Promise<Turma[]> {
     if (!filtros || !filtros.escolaId) throw new Error('Parâmetros inválidos');
-    return this.turmas
-      .filter(turma => turma.escolaId == filtros.escolaId)
-      .map(turma => new Turma(turma));
+    return this.db
+      .getTurmas()
+      .filter(turma => turma.escolaId == filtros.escolaId);
   }
 
   /**
@@ -91,7 +41,8 @@ export class EscolasService {
    */
   async listaAlunos(filtros: { escolaId: string, turmaId: string }): Promise<Aluno[]> {
     if (!filtros || !filtros.escolaId || !filtros.turmaId) throw new Error('Parâmetros inválidos');
-    return this.alunos
+    return this.db
+      .getAlunos()
       .filter(aluno => {
         if (filtros.escolaId && filtros.escolaId != aluno.escolaId) {
           return false;
@@ -100,8 +51,7 @@ export class EscolasService {
           return false;
         }
         return true;
-      })
-      .map(aluno => new Aluno(aluno));
+      });
   }
 
   /**
@@ -109,17 +59,7 @@ export class EscolasService {
    * @param escola dados da escola.
    */
   async salvaEscola(escola: Escola) {
-    console.log('Salvando escola')
-    let _escola = escola.id ? this.escolas.find(_escola => _escola.id == escola.id) : null;
-    if (!_escola) {
-      _escola = new Escola(escola);
-      _escola.id = `${this.lastEscolaId++}`;
-      this.escolas.push(_escola);
-      return new Escola(_escola);
-    } else {
-      _escola.deserialize(escola);
-      return _escola;
-    }
+    return this.db.salvaEscola(escola);
   }
 
   /**
@@ -127,16 +67,7 @@ export class EscolasService {
    * @param turma dados da turma.
    */
   async salvaTurma(turma: Turma) {
-    let _turma = turma.id ? this.turmas.find(_turma => _turma.id == turma.id) : null;
-    if (!_turma) {
-      _turma = new Turma(turma);
-      _turma.id = `${this.lastTurmaId++}`;
-      this.turmas.push(_turma);
-      return new Turma(_turma);
-    } else {
-      _turma.deserialize(turma);
-      return _turma;
-    }
+    return this.db.salvaTurma(turma);
   }
 
   /**
@@ -144,17 +75,7 @@ export class EscolasService {
    * @param aluno dados do aluno.
    */
   async salvaAluno(aluno: Aluno) {
-    let _aluno = aluno.id ? this.alunos.find(_turma => _turma.id == aluno.id) : null;
-    if (!_aluno) {
-      _aluno = new Aluno(aluno);
-      _aluno.id = `${this.lastAlunoId++}`;
-      _aluno.matricula = Math.floor(Math.random() * 1000000000) + '';
-      this.alunos.push(_aluno);
-      return new Aluno(_aluno);
-    } else {
-      _aluno.deserialize(aluno);
-      return _aluno;
-    }
+    return this.db.salvaAluno(aluno);
   }
 
   /**
@@ -162,9 +83,11 @@ export class EscolasService {
    * @param escolaId
    */
   async buscaEscola(escolaId: string): Promise<{ escola: Escola, turmas: Turma[] }> {
-    let escola = this.escolas.find(escola => escola.id == escolaId);
+    // escola
+    let escola = this.db.getEscola(escolaId);
     if (!escola) throw new Error('Escola não encontrada');
-    let turmas = this.turmas.filter(turma => escola.id == turma.escolaId);
+    // turmas da escola
+    let turmas = this.db.getTurmas().filter(turma => escola.id == turma.escolaId);
     return { escola, turmas };
   }
 
@@ -174,27 +97,30 @@ export class EscolasService {
    */
   async buscaTurma(turmaId: string): Promise<{ escola: Escola, turma: Turma, alunos: Aluno[] }> {
     if (!turmaId) throw new Error('Turma inválida');
-    let turma = this.turmas.find(turma => turma.id == turmaId);
+    // turma
+    let turma = this.db.getTurma(turmaId);
     if (!turma) throw new Error('Turma não encontrada');
-    let alunos = this.alunos.filter(aluno => {
+    // alunos da turma
+    let alunos = this.db.getAlunos().filter(aluno => {
       return turma.id == aluno.turmaId;
     });
-    let escola = this.escolas.find(escola => turma.escolaId == escola.id);
+    // escola da turma
+    let escola = this.db.getEscola(turma.escolaId);
     return { escola, turma, alunos };
   }
 
   /**
- * Busca um aluno.
- * @param alunoId
- */
+   * Busca um aluno.
+   * @param alunoId
+   */
   async buscaAluno(alunoId: string) {
-    let aluno = this.alunos.find(aluno => aluno.id == alunoId);
+    // aluno
+    let aluno = this.db.getAluno(alunoId);
     if (aluno) throw new Error('Aluno(a) não encontrado(a)');
-    aluno = new Aluno(aluno);
-    let escola = this.escolas.find(escola => aluno.escolaId == escola.id);
-    if (escola) escola = new Escola(escola);
-    let turma = this.turmas.find(turma => aluno.turmaId == turma.id);
-    if (turma) turma = new Turma(turma);
+    // escola do aluno
+    let escola = this.db.getEscola(aluno.escolaId);
+    // turma do aluno
+    let turma = this.db.getTurma(aluno.turmaId);
     return { escola, turma, aluno };
   }
 
@@ -203,14 +129,13 @@ export class EscolasService {
  * @param cpf
  */
   async buscaAlunoPorCPF(cpf: string) {
-    let aluno = this.alunos.find(aluno => {
+    let aluno = this.db.getAlunos().find(aluno => {
       let cpf1 = (aluno.cpf || '').replace(/\D/g, '');
       let cpf2 = (cpf || '').replace(/\D/g, '');
-      // console.log(cpf1, cpf2);
       return cpf1 == cpf2;
     });
     if (!aluno) throw new Error('Aluno(a) não encontrado(a)');
-    return new Aluno(aluno);
+    return aluno;
   }
 
 }
